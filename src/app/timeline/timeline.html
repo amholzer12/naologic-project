@@ -5,11 +5,23 @@
     <h1 class="page-title">Work Orders</h1>
     <div class="toolbar">
       <span class="timescale-label">Timescale</span>
-      <select class="timescale-select">
-        <option>Day</option>
-        <option>Week</option>
-        <option selected>Month</option>
-      </select>
+      <div class="timescale-dropdown">
+        <button class="timescale-btn" (click)="toggleTimescale($event)">
+          <span>{{ timescale() }}</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+            <path d="M1 1L5 5L9 1" stroke="rgba(62,64,219,1)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        @if (timescaleOpen()) {
+          <div class="timescale-menu">
+            @for (option of timescaleOptions; track option) {
+              <div class="timescale-option"
+                   [class.selected]="timescale() === option"
+                   (click)="selectTimescale(option)">{{ option }}</div>
+            }
+          </div>
+        }
+      </div>
     </div>
   </header>
 
@@ -26,19 +38,32 @@
     <!-- Scrollable right panel -->
     <div class="right-panel">
       <div class="grid-header">
-        @for (month of visibleMonths(); track month.label) {
-          <div class="grid-col-header">{{ month.label }}</div>
+        @for (col of visibleColumns(); track col.label) {
+          <div class="grid-col-header">{{ col.label }}</div>
         }
       </div>
       <div class="grid-rows">
         @for (wc of svc.workCenters; track wc.docId) {
-          <div class="grid-row">
+          <div class="grid-row" (click)="onGridRowClick($event, wc.docId)">
             @for (bar of getBarsForWorkCenter(wc.docId); track bar.docId) {
               <div class="work-order-bar status-{{ bar.data.status }}"
                    [style.left]="bar.style.left"
                    [style.width]="bar.style.width">
                 <span class="bar-name">{{ bar.data.name }}</span>
-                <span class="bar-status">{{ bar.data.status }}</span>
+                <div class="bar-right">
+                  <span class="bar-status">{{ bar.data.status }}</span>
+                  <div class="bar-menu-wrapper">
+                    <button class="bar-menu-btn" (click)="toggleBarMenu(bar.docId, $event)">
+                      <span>•••</span>
+                    </button>
+                    @if (openMenuId() === bar.docId) {
+                      <div class="bar-menu">
+                        <div class="bar-menu-item" (click)="onEditWorkOrder(bar, $event)">Edit</div>
+                        <div class="bar-menu-item delete" (click)="onDeleteWorkOrder(bar.docId, $event)">Delete</div>
+                      </div>
+                    }
+                  </div>
+                </div>
               </div>
             }
           </div>
@@ -47,5 +72,19 @@
     </div>
 
   </div>
+
+  <!-- Panel backdrop -->
+  @if (panelOpen()) {
+    <div class="panel-backdrop" (click)="onBackdropClick()"></div>
+    <div class="panel-container">
+      <app-work-order-panel
+        [mode]="panelMode()"
+        [workOrder]="editingWorkOrder()"
+        [workCenterId]="panelWorkCenterId()"
+        [prefillDate]="panelPrefillDate()"
+        (saved)="onPanelSaved()"
+        (cancelled)="onPanelCancelled()" />
+    </div>
+  }
 
 </div>

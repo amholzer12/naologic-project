@@ -1,0 +1,89 @@
+<div class="panel-header">
+  <div class="panel-title-group">
+    <h2 class="panel-title">{{ title }}</h2>
+    <p class="panel-subtitle">Specify the dates, name and status for this order</p>
+  </div>
+  <div class="panel-actions">
+    <button class="btn-cancel" type="button" (click)="onCancel()">Cancel</button>
+    <button class="btn-submit" type="button" (click)="onSubmit()">{{ submitLabel }}</button>
+  </div>
+</div>
+
+<form [formGroup]="form" class="panel-form">
+
+  <!-- Overlap error banner -->
+  @if (overlapError) {
+    <div class="error-banner">
+      This work order overlaps with an existing order on the same work center.
+    </div>
+  }
+
+  <!-- Work Order Name -->
+  <div class="field-group">
+    <label class="field-label">Work Order Name</label>
+    <input
+      class="field-input"
+      [class.invalid]="form.controls.name.invalid && form.controls.name.touched"
+      formControlName="name"
+      placeholder="Acme Inc."
+      type="text" />
+    @if (form.controls.name.invalid && form.controls.name.touched) {
+      <span class="field-error">Name is required</span>
+    }
+  </div>
+
+  <!-- Status -->
+  <div class="field-group">
+    <label class="field-label">Status</label>
+    <ng-select
+      formControlName="status"
+      [items]="statusOptions"
+      bindLabel="label"
+      bindValue="value"
+      [clearable]="false"
+      [searchable]="false"
+      placeholder="Select status">
+    </ng-select>
+  </div>
+
+  <!-- End Date -->
+  <div class="field-group">
+    <label class="field-label">End date</label>
+    <div class="date-input-wrapper">
+      <input
+        class="field-input"
+        [class.invalid]="form.controls.endDate.invalid && form.controls.endDate.touched"
+        formControlName="endDate"
+        ngbDatepicker
+        #endPicker="ngbDatepicker"
+        (click)="endPicker.toggle()"
+        placeholder="MM/DD/YYYY"
+        readonly />
+    </div>
+    @if (form.controls.endDate.errors?.['endBeforeStart']) {
+      <span class="field-error">End date must be after start date</span>
+    } @else if (form.controls.endDate.invalid && form.controls.endDate.touched) {
+      <span class="field-error">End date is required</span>
+    }
+  </div>
+
+  <!-- Start Date -->
+  <div class="field-group">
+    <label class="field-label">Start date</label>
+    <div class="date-input-wrapper">
+      <input
+        class="field-input"
+        [class.invalid]="form.controls.startDate.invalid && form.controls.startDate.touched"
+        formControlName="startDate"
+        ngbDatepicker
+        #startPicker="ngbDatepicker"
+        (click)="startPicker.toggle()"
+        placeholder="MM/DD/YYYY"
+        readonly />
+    </div>
+    @if (form.controls.startDate.invalid && form.controls.startDate.touched) {
+      <span class="field-error">Start date is required</span>
+    }
+  </div>
+
+</form>

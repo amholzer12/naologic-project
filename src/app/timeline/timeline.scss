@@ -34,16 +34,62 @@ $header-height: 40px;
 
 .timescale-label {
   font-size: 13px;
-  color: #6b6b6b;
+  font-weight: 400;
+  color: rgba(104, 113, 150, 1);
 }
 
-.timescale-select {
+.timescale-dropdown {
+  position: relative;
+}
+
+.timescale-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 25px;
+  padding: 0 8px;
+  background-color: rgba(241, 243, 248, 0.75);
+  border: none;
+  border-radius: 5px;
   font-family: 'Circular-Std', sans-serif;
   font-size: 13px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 4px 8px;
+  font-weight: 500;
+  color: rgba(62, 64, 219, 1);
   cursor: pointer;
+
+  &:hover {
+    background-color: rgba(230, 232, 245, 0.9);
+  }
+}
+
+.timescale-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 200px;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(104, 113, 150, 0.1), 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.timescale-option {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(3, 9, 41, 1);
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(241, 243, 248, 0.75);
+  }
+
+  &.selected {
+    color: rgba(62, 64, 219, 1);
+    background: rgba(237, 238, 255, 0.5);
+  }
 }
 
 // Two-column layout: fixed left + scrollable right
@@ -68,9 +114,9 @@ $header-height: 40px;
   display: flex;
   align-items: center;
   padding: 0 16px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b6b6b;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(104, 113, 150, 1);
   border-bottom: 1px solid #e8e8f0;
   background: #fafafa;
 }
@@ -80,8 +126,9 @@ $header-height: 40px;
   display: flex;
   align-items: center;
   padding: 0 16px;
-  font-size: 13px;
-  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(3, 9, 41, 1);
   border-bottom: 1px solid #e8e8f0;
 
   &:hover {
@@ -108,9 +155,9 @@ $header-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b6b6b;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(104, 113, 150, 1);
   border-right: 1px solid #e8e8f0;
 
   &:last-child {
@@ -120,6 +167,7 @@ $header-height: 40px;
 
 .grid-rows {
   position: relative;
+  overflow: visible;
 }
 
 .grid-row {
@@ -130,4 +178,136 @@ $header-height: 40px;
   &:hover {
     background: #f0f1ff;
   }
+}
+
+// Work order bars
+.work-order-bar {
+  position: absolute;
+  top: 5px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  gap: 8px;
+  overflow: visible;
+  cursor: pointer;
+
+  .bar-name {
+    font-size: 14px;
+    font-weight: 400;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bar-status {
+    font-size: 14px;
+    font-weight: 400;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    text-transform: capitalize;
+  }
+
+  // Status color variants — exact values from Sketch inspect
+  &.status-complete {
+    background: rgba(248, 255, 243, 1);
+    box-shadow: 0 0 0 1px rgba(209, 250, 179, 1);
+    .bar-status { background: rgba(225, 255, 204, 1); color: rgba(8, 162, 104, 1); }
+  }
+
+  &.status-in-progress {
+    background: rgba(237, 238, 255, 1);
+    box-shadow: 0 0 0 1px rgba(222, 224, 255, 1);
+    .bar-status { background: rgba(214, 216, 255, 1); color: rgba(62, 64, 219, 1); }
+  }
+
+  &.status-blocked {
+    background: rgba(255, 252, 241, 1);
+    box-shadow: 0 0 0 1px rgba(255, 245, 207, 1);
+    .bar-status { background: rgba(252, 238, 181, 1); color: rgba(177, 54, 0, 1); }
+  }
+
+  // Open — estimate until we get exact Sketch values
+  // @upgrade Update with exact Sketch color values once located
+  &.status-open {
+    background: rgba(235, 244, 255, 1);
+    box-shadow: 0 0 0 1px rgba(190, 220, 255, 1);
+    .bar-status { background: rgba(190, 220, 255, 1); color: rgba(0, 90, 180, 1); }
+  }
+}
+
+// Three-dot menu on bars
+.bar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.bar-menu-wrapper {
+  position: relative;
+}
+
+.bar-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: inherit;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.15s;
+
+  .work-order-bar:hover & { opacity: 1; }
+}
+
+.bar-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(104, 113, 150, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  min-width: 100px;
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.bar-menu-item {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: rgba(3, 9, 41, 1);
+  cursor: pointer;
+
+  &:hover { background: rgba(241, 243, 248, 0.75); }
+  &.delete { color: #e53935; }
+}
+
+// Slide-in panel
+.panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+.panel-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+  z-index: 201;
+  overflow-y: auto;
 }

@@ -62,4 +62,23 @@ export class WorkOrderService {
   deleteWorkOrder(docId: string): void {
     this.workOrders.update(orders => orders.filter(o => o.docId !== docId));
   }
+
+  // Check if a work order's dates overlap with any existing orders on the same work center.
+  // excludeId is used during editing so we don't flag the order against itself.
+  hasOverlap(order: WorkOrderDocument, excludeId?: string): boolean {
+    const others = this.workOrders().filter(o =>
+      o.data.workCenterId === order.data.workCenterId && o.docId !== excludeId
+    );
+    const s = new Date(order.data.startDate).getTime();
+    const e = new Date(order.data.endDate).getTime();
+    return others.some(o => {
+      const os = new Date(o.data.startDate).getTime();
+      const oe = new Date(o.data.endDate).getTime();
+      return s < oe && e > os;
+    });
+  }
+
+  generateId(): string {
+    return 'wo-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
 }
