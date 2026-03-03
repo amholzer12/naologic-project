@@ -1,0 +1,133 @@
+$left-panel-width: 200px;
+$row-height: 48px;
+$header-height: 40px;
+
+.page {
+  padding: 24px 32px;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.logo {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9b9b9b;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timescale-label {
+  font-size: 13px;
+  color: #6b6b6b;
+}
+
+.timescale-select {
+  font-family: 'Circular-Std', sans-serif;
+  font-size: 13px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+// Two-column layout: fixed left + scrollable right
+.timeline-container {
+  display: flex;
+  border: 1px solid #e8e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+// Fixed left panel
+.left-panel {
+  width: $left-panel-width;
+  min-width: $left-panel-width;
+  border-right: 1px solid #e8e8f0;
+  background: #fff;
+  z-index: 1;
+}
+
+.left-panel-header {
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b6b6b;
+  border-bottom: 1px solid #e8e8f0;
+  background: #fafafa;
+}
+
+.work-center-row {
+  height: $row-height;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 13px;
+  color: #1a1a1a;
+  border-bottom: 1px solid #e8e8f0;
+
+  &:hover {
+    background: #f0f1ff;
+  }
+}
+
+// Scrollable right panel
+.right-panel {
+  flex: 1;
+  overflow-x: auto;
+}
+
+.grid-header {
+  display: flex;
+  height: $header-height;
+  border-bottom: 1px solid #e8e8f0;
+  background: #fafafa;
+}
+
+.grid-col-header {
+  min-width: 120px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b6b6b;
+  border-right: 1px solid #e8e8f0;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.grid-rows {
+  position: relative;
+}
+
+.grid-row {
+  height: $row-height;
+  border-bottom: 1px solid #e8e8f0;
+  position: relative;
+
+  &:hover {
+    background: #f0f1ff;
+  }
+}
