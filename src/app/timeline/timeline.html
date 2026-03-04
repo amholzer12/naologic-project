@@ -43,6 +43,9 @@
         }
       </div>
       <div class="grid-rows">
+        @if (todayVisible()) {
+          <div class="today-indicator" [style.left.%]="todayPosition()"></div>
+        }
         @for (wc of svc.workCenters; track wc.docId) {
           <div class="grid-row" (click)="onGridRowClick($event, wc.docId)">
             @for (bar of getBarsForWorkCenter(wc.docId); track bar.docId) {
@@ -57,7 +60,9 @@
                       <span>•••</span>
                     </button>
                     @if (openMenuId() === bar.docId) {
-                      <div class="bar-menu">
+                      <div class="bar-menu"
+                           [style.top.px]="menuPosition().top"
+                           [style.left.px]="menuPosition().left">
                         <div class="bar-menu-item" (click)="onEditWorkOrder(bar, $event)">Edit</div>
                         <div class="bar-menu-item delete" (click)="onDeleteWorkOrder(bar.docId, $event)">Delete</div>
                       </div>

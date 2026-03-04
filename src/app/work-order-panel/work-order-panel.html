@@ -49,17 +49,17 @@
   <!-- End Date -->
   <div class="field-group">
     <label class="field-label">End date</label>
-    <div class="date-input-wrapper">
-      <input
-        class="field-input"
-        [class.invalid]="form.controls.endDate.invalid && form.controls.endDate.touched"
-        formControlName="endDate"
-        ngbDatepicker
-        #endPicker="ngbDatepicker"
-        (click)="endPicker.toggle()"
-        placeholder="MM/DD/YYYY"
-        readonly />
-    </div>
+    <input
+      class="field-input"
+      [class.invalid]="form.controls.endDate.invalid && form.controls.endDate.touched"
+      formControlName="endDate"
+      ngbDatepicker
+      #endPicker="ngbDatepicker"
+            [container]="'body'"
+      [autoClose]="true"
+      (click)="startPicker.close(); endPicker.toggle()"
+      placeholder="MM.DD.YYYY"
+      readonly />
     @if (form.controls.endDate.errors?.['endBeforeStart']) {
       <span class="field-error">End date must be after start date</span>
     } @else if (form.controls.endDate.invalid && form.controls.endDate.touched) {
@@ -70,17 +70,17 @@
   <!-- Start Date -->
   <div class="field-group">
     <label class="field-label">Start date</label>
-    <div class="date-input-wrapper">
-      <input
-        class="field-input"
-        [class.invalid]="form.controls.startDate.invalid && form.controls.startDate.touched"
-        formControlName="startDate"
-        ngbDatepicker
-        #startPicker="ngbDatepicker"
-        (click)="startPicker.toggle()"
-        placeholder="MM/DD/YYYY"
-        readonly />
-    </div>
+    <input
+      class="field-input"
+      [class.invalid]="form.controls.startDate.invalid && form.controls.startDate.touched"
+      formControlName="startDate"
+      ngbDatepicker
+      #startPicker="ngbDatepicker"
+            [container]="'body'"
+      [autoClose]="true"
+      (click)="endPicker.close(); startPicker.toggle()"
+      placeholder="MM.DD.YYYY"
+      readonly />
     @if (form.controls.startDate.invalid && form.controls.startDate.touched) {
       <span class="field-error">Start date is required</span>
     }

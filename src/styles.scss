@@ -1,4 +1,6 @@
 @import url('https://naologic-com-assets.naologic.com/fonts/circular-std/circular-std.css');
+@import "@ng-select/ng-select/themes/default.theme.css";
+@import "bootstrap/scss/bootstrap";
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,4 +12,9 @@ body {
   font-family: 'Circular-Std', sans-serif;
   background: #ffffff;
   color: #1a1a1a;
+}
+
+// Hide the empty datepicker header (navigation is not functional)
+.ngb-dp-header {
+  display: none !important;
 }

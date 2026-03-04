@@ -33,12 +33,35 @@ export class Timeline {
     return cols[cols.length - 1].endDate;
   });
 
+  protected todayPosition = computed(() => {
+    const gridStartMs = this.gridStart().getTime();
+    const gridEndMs = this.gridEnd().getTime();
+    const totalMs = gridEndMs - gridStartMs;
+    const todayMs = new Date().setHours(0, 0, 0, 0);
+    return ((todayMs - gridStartMs) / totalMs) * 100;
+  });
+
+  protected todayVisible = computed(() => {
+    const pos = this.todayPosition();
+    return pos >= 0 && pos <= 100;
+  });
+
   // --- Bar menu state ---
   openMenuId = signal<string | null>(null);
+  menuPosition = signal<{ top: number; left: number }>({ top: 0, left: 0 });
 
   toggleBarMenu(docId: string, event: MouseEvent) {
     event.stopPropagation();
-    this.openMenuId.update(id => id === docId ? null : docId);
+    if (this.openMenuId() === docId) {
+      this.openMenuId.set(null);
+      return;
+    }
+    // Calculate position from the button's location on screen
+    // so the menu can use position:fixed and escape any overflow clipping
+    const btn = event.currentTarget as HTMLElement;
+    const rect = btn.getBoundingClientRect();
+    this.menuPosition.set({ top: rect.bottom + 4, left: rect.left });
+    this.openMenuId.set(docId);
   }
 
   // --- Panel state ---

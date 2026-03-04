@@ -191,7 +191,7 @@ $header-height: 40px;
   justify-content: space-between;
   padding: 0 10px;
   gap: 8px;
-  overflow: visible;
+  overflow: hidden;
   cursor: pointer;
 
   .bar-name {
@@ -234,12 +234,13 @@ $header-height: 40px;
     .bar-status { background: rgba(252, 238, 181, 1); color: rgba(177, 54, 0, 1); }
   }
 
-  // Open — estimate until we get exact Sketch values
-  // @upgrade Update with exact Sketch color values once located
+  // Open — teal/cyan. Badge values confirmed from Sketch panel dropdown inspect.
+  // Bar background estimated from pattern; exact bar rectangle not found in designs.
+  // @upgrade Confirm bar background/shadow with Sketch bar rectangle if located.
   &.status-open {
-    background: rgba(235, 244, 255, 1);
-    box-shadow: 0 0 0 1px rgba(190, 220, 255, 1);
-    .bar-status { background: rgba(190, 220, 255, 1); color: rgba(0, 90, 180, 1); }
+    background: rgba(235, 255, 255, 1);
+    box-shadow: 0 0 0 1px rgba(206, 251, 255, 1);
+    .bar-status { background: rgba(206, 251, 255, 1); color: rgba(0, 176, 191, 1); }
   }
 }
 
@@ -271,9 +272,7 @@ $header-height: 40px;
 }
 
 .bar-menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
+  position: fixed;
   background: #ffffff;
   border-radius: 6px;
   box-shadow: 0 0 0 1px rgba(104, 113, 150, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
