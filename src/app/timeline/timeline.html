@@ -37,6 +37,7 @@
 
     <!-- Scrollable right panel -->
     <div class="right-panel">
+      <div class="grid-canvas">
       <div class="grid-header">
         @for (col of visibleColumns(); track col.label) {
           <div class="grid-col-header">{{ col.label }}</div>
@@ -74,6 +75,7 @@
           </div>
         }
       </div>
+      </div><!-- /grid-canvas -->
     </div>
 
   </div>

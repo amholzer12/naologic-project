@@ -43,6 +43,9 @@
       [clearable]="false"
       [searchable]="false"
       placeholder="Select status">
+      <ng-template ng-label-tmp let-item="item">
+        <span class="status-badge status-badge-{{ item.value }}">{{ item.label }}</span>
+      </ng-template>
     </ng-select>
   </div>
 
@@ -55,7 +58,7 @@
       formControlName="endDate"
       ngbDatepicker
       #endPicker="ngbDatepicker"
-            [container]="'body'"
+      [container]="'body'"
       [autoClose]="true"
       (click)="startPicker.close(); endPicker.toggle()"
       placeholder="MM.DD.YYYY"

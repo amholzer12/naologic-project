@@ -142,6 +142,10 @@ $header-height: 40px;
   overflow-x: auto;
 }
 
+.grid-canvas {
+  min-width: max-content;
+}
+
 .grid-header {
   display: flex;
   height: $header-height;
@@ -170,6 +174,16 @@ $header-height: 40px;
   overflow: visible;
 }
 
+.today-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(62, 64, 219, 0.25);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .grid-row {
   height: $row-height;
   border-bottom: 1px solid #e8e8f0;
@@ -195,6 +209,8 @@ $header-height: 40px;
   cursor: pointer;
 
   .bar-name {
+    flex: 1;
+    min-width: 0;
     font-size: 14px;
     font-weight: 400;
     color: #1a1a1a;
@@ -303,10 +319,11 @@ $header-height: 40px;
   position: fixed;
   top: 0;
   right: 0;
-  width: 380px;
+  width: 591px;
   height: 100vh;
   background: #ffffff;
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px 0 rgba(216, 220, 235, 1), 0 2.5px 3px -1.5px rgba(200, 207, 233, 1), 0 4.5px 5px -1px rgba(216, 220, 235, 1);
+  border-radius: 12px 0 0 12px;
   z-index: 201;
   overflow-y: auto;
 }

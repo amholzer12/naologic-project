@@ -2,19 +2,19 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 20px 24px 16px;
+  padding: 24px 40px 20px;
   border-bottom: 1px solid #e8e8f0;
 }
 
 .panel-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(3, 9, 41, 1);
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(47, 48, 89, 1);
   margin-bottom: 4px;
 }
 
 .panel-subtitle {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
   color: rgba(104, 113, 150, 1);
 }
@@ -27,42 +27,46 @@
 }
 
 .btn-cancel {
-  background: none;
+  background: #ffffff;
   border: none;
+  box-shadow: 0 0 0 1px rgba(200, 207, 233, 1), 0 1px 3px 0 rgba(200, 207, 233, 1);
+  border-radius: 7px;
   font-family: 'Circular-Std', sans-serif;
-  font-size: 14px;
-  color: rgba(104, 113, 150, 1);
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(47, 48, 89, 1);
   cursor: pointer;
-  padding: 0;
+  padding: 7px 16px;
 
-  &:hover { color: rgba(3, 9, 41, 1); }
+  &:hover { background: rgba(241, 243, 248, 1); }
 }
 
 .btn-submit {
-  background: rgba(62, 64, 219, 1);
+  background: rgba(86, 89, 255, 1);
   color: #ffffff;
   border: none;
-  border-radius: 6px;
+  border-radius: 7px;
+  box-shadow: 0 0 0 1px rgba(86, 89, 255, 1), 0 1px 3px 0 rgba(200, 207, 233, 1);
   font-family: 'Circular-Std', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 18px;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 7px 16px;
   cursor: pointer;
 
-  &:hover { background: rgba(50, 52, 190, 1); }
+  &:hover { background: rgba(70, 73, 230, 1); }
 }
 
 .panel-form {
-  padding: 20px 24px;
+  padding: 24px 40px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .field-label {
@@ -75,21 +79,17 @@
   font-family: 'Circular-Std', sans-serif;
   font-size: 14px;
   color: rgba(3, 9, 41, 1);
-  border: none;
-  border-bottom: 1px solid #e8e8f0;
-  padding: 6px 0;
+  border: 1px solid rgba(200, 207, 233, 1);
+  border-radius: 7px;
+  padding: 10px 12px;
   width: 100%;
-  background: transparent;
+  background: #ffffff;
   outline: none;
   cursor: pointer;
 
-  &:focus { border-bottom-color: rgba(62, 64, 219, 1); }
-  &.invalid { border-bottom-color: #e53935; }
-  &::placeholder { color: rgba(104, 113, 150, 0.5); }
-}
-
-.date-input-wrapper {
-  position: relative;
+  &:focus { border-color: rgba(86, 89, 255, 1); }
+  &.invalid { border-color: #e53935; }
+  &::placeholder { color: rgba(164, 170, 192, 1); }
 }
 
 .field-error {
@@ -106,26 +106,35 @@
   color: #c62828;
 }
 
-// Override ng-select to match the underline field style
+// Status badge used in the selected value display
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 400;
+
+  &.status-badge-open        { background: rgba(206, 251, 255, 1); color: rgba(0, 176, 191, 1); }
+  &.status-badge-in-progress { background: rgba(214, 216, 255, 1); color: rgba(62, 64, 219, 1); }
+  &.status-badge-complete    { background: rgba(225, 255, 204, 1); color: rgba(8, 162, 104, 1); }
+  &.status-badge-blocked     { background: rgba(252, 238, 181, 1); color: rgba(177, 54, 0, 1); }
+}
+
+// Override ng-select to match the bordered field style
 ::ng-deep .ng-select {
   .ng-select-container {
-    border: none !important;
-    border-bottom: 1px solid #e8e8f0 !important;
-    border-radius: 0 !important;
+    border: 1px solid rgba(200, 207, 233, 1) !important;
+    border-radius: 7px !important;
     box-shadow: none !important;
-    padding: 4px 0;
-    background: transparent;
+    padding: 6px 12px;
+    background: #ffffff;
     min-height: unset;
   }
 
   &.ng-select-focused .ng-select-container {
-    border-bottom-color: rgba(62, 64, 219, 1) !important;
-  }
-
-  .ng-value-label {
-    font-family: 'Circular-Std', sans-serif;
-    font-size: 14px;
-    color: rgba(3, 9, 41, 1);
+    border-color: rgba(86, 89, 255, 1) !important;
   }
 
   .ng-placeholder {
@@ -134,4 +143,15 @@
   }
 
   .ng-arrow-wrapper { padding-right: 0; }
+
+  .ng-dropdown-panel .ng-option {
+    &.ng-option-marked {
+      background: rgba(237, 238, 255, 0.5) !important;
+      color: rgba(86, 89, 255, 1) !important;
+    }
+    &.ng-option-selected {
+      background: rgba(237, 238, 255, 0.75) !important;
+      color: rgba(86, 89, 255, 1) !important;
+    }
+  }
 }
