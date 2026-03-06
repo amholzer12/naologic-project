@@ -4,6 +4,9 @@ $header-height: 40px;
 
 .page {
   padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .top-nav {
@@ -98,7 +101,7 @@ $header-height: 40px;
 
   &.selected {
     color: rgba(62, 64, 219, 1);
-    background: rgba(237, 238, 255, 0.5);
+    background: rgba(238, 240, 255, 1);
   }
 }
 
@@ -109,6 +112,7 @@ $header-height: 40px;
   border-radius: 8px;
   overflow: hidden;
   margin: 0 36px 32px 100px;
+  flex: 1;
 }
 
 // Fixed left panel
@@ -138,7 +142,7 @@ $header-height: 40px;
   align-items: center;
   padding: 0 16px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   color: rgba(3, 9, 41, 1);
   border-bottom: 1px solid #e8e8f0;
 
@@ -151,10 +155,15 @@ $header-height: 40px;
 .right-panel {
   flex: 1;
   overflow-x: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .grid-canvas {
   min-width: max-content;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .grid-header {
@@ -162,6 +171,7 @@ $header-height: 40px;
   height: $header-height;
   border-bottom: 1px solid #e8e8f0;
   background: #fafafa;
+  overflow: visible;
 }
 
 .grid-col-header {
@@ -174,15 +184,37 @@ $header-height: 40px;
   font-weight: 400;
   color: rgba(104, 113, 150, 1);
   border-right: 1px solid #e8e8f0;
+  position: relative;
 
   &:last-child {
     border-right: none;
   }
+
+}
+
+.current-col-badge {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(212, 215, 255, 1);
+  border-radius: 5px;
+  height: 22px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(62, 64, 219, 1);
+  white-space: nowrap;
+  z-index: 10;
 }
 
 .grid-rows {
   position: relative;
   overflow: visible;
+  background: rgba(238, 240, 255, 1);
+  flex: 1;
 }
 
 .today-indicator {
@@ -199,11 +231,40 @@ $header-height: 40px;
   height: $row-height;
   border-bottom: 1px solid #e8e8f0;
   position: relative;
-  background: rgba(237, 238, 255, 0.5);
-
   &:hover {
     background: rgba(237, 238, 255, 0.85);
   }
+}
+
+// Ghost bar (hover placeholder)
+.ghost-bar {
+  position: absolute;
+  top: 5px;
+  width: 113px;
+  height: 38px;
+  border: 1px solid rgba(195, 199, 255, 1);
+  border-radius: 8px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.ghost-tooltip {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(104, 113, 150, 1);
+  color: rgba(249, 250, 255, 1);
+  font-size: 14px;
+  font-weight: 400;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px -2px rgba(200, 207, 233, 1), 0 0 16px -8px rgba(230, 235, 240, 1);
+  z-index: 10;
 }
 
 // Work order bars

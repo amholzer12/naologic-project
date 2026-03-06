@@ -46,6 +46,37 @@ export class Timeline {
     return pos >= 0 && pos <= 100;
   });
 
+  protected currentColBadgeLabel = computed(() => {
+    const ts = this.timescale();
+    if (ts === 'Month') return 'Current month';
+    if (ts === 'Week') return 'Current week';
+    return 'Current day';
+  });
+
+  protected isCurrentColumn(col: TimeColumn): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today >= col.startDate && today <= col.endDate;
+  }
+
+  // --- Ghost bar hover state ---
+  hoverRowId = signal<string | null>(null);
+  hoverX = signal<number>(0);
+
+  onRowMouseMove(event: MouseEvent, workCenterId: string) {
+    if ((event.target as HTMLElement).closest('.work-order-bar')) {
+      this.hoverRowId.set(null);
+      return;
+    }
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    this.hoverX.set(event.clientX - rect.left);
+    this.hoverRowId.set(workCenterId);
+  }
+
+  onRowMouseLeave() {
+    this.hoverRowId.set(null);
+  }
+
   // --- Bar menu state ---
   openMenuId = signal<string | null>(null);
   menuPosition = signal<{ top: number; left: number }>({ top: 0, left: 0 });

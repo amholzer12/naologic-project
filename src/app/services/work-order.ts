@@ -6,46 +6,46 @@ export class WorkOrderService {
 
   // Sample work centers
   readonly workCenters: WorkCenterDocument[] = [
-    { docId: 'wc-1', docType: 'workCenter', data: { name: 'Genesis Hardware' } },
-    { docId: 'wc-2', docType: 'workCenter', data: { name: 'Rodriques Electrics' } },
-    { docId: 'wc-3', docType: 'workCenter', data: { name: 'Konsulting Inc' } },
-    { docId: 'wc-4', docType: 'workCenter', data: { name: 'McMorrow Distribution' } },
-    { docId: 'wc-5', docType: 'workCenter', data: { name: 'Spartan Manufacturing' } },
+    { docId: 'wc-1', docType: 'workCenter', data: { name: 'Apex Fabrication' } },
+    { docId: 'wc-2', docType: 'workCenter', data: { name: 'Volt Systems' } },
+    { docId: 'wc-3', docType: 'workCenter', data: { name: 'Meridian Assembly' } },
+    { docId: 'wc-4', docType: 'workCenter', data: { name: 'Harwick Logistics' } },
+    { docId: 'wc-5', docType: 'workCenter', data: { name: 'Blackstone Precision' } },
   ];
 
   // Work orders as a signal so components reactively update when data changes
   workOrders = signal<WorkOrderDocument[]>([
     {
       docId: 'wo-1', docType: 'workOrder',
-      data: { name: 'Centrix Ltd', workCenterId: 'wc-1', status: 'complete', startDate: '2025-10-01', endDate: '2025-12-15' }
+      data: { name: 'Bracket Assembly – Lot 22', workCenterId: 'wc-1', status: 'complete', startDate: '2025-10-01', endDate: '2025-12-15' }
     },
     {
       docId: 'wo-2', docType: 'workOrder',
-      data: { name: 'Rodriques Electrics', workCenterId: 'wc-2', status: 'in-progress', startDate: '2025-11-01', endDate: '2026-02-10' }
+      data: { name: 'PCB Rework – Batch 7', workCenterId: 'wc-2', status: 'in-progress', startDate: '2025-11-01', endDate: '2026-02-10' }
     },
     {
       docId: 'wo-3', docType: 'workOrder',
-      data: { name: 'Konsulting Inc', workCenterId: 'wc-3', status: 'in-progress', startDate: '2025-10-15', endDate: '2026-01-20' }
+      data: { name: 'Drive Housing – Q4 Run', workCenterId: 'wc-3', status: 'in-progress', startDate: '2025-10-15', endDate: '2026-01-20' }
     },
     {
       docId: 'wo-4', docType: 'workOrder',
-      data: { name: 'Compleks Systems', workCenterId: 'wc-3', status: 'in-progress', startDate: '2026-02-01', endDate: '2026-04-30' }
+      data: { name: 'Gearbox Rebuild – Series B', workCenterId: 'wc-3', status: 'in-progress', startDate: '2026-02-01', endDate: '2026-04-30' }
     },
     {
       docId: 'wo-5', docType: 'workOrder',
-      data: { name: 'McMorrow Distribution', workCenterId: 'wc-4', status: 'blocked', startDate: '2025-11-10', endDate: '2026-03-20' }
+      data: { name: 'Outbound Pallet Prep', workCenterId: 'wc-4', status: 'blocked', startDate: '2025-11-10', endDate: '2026-03-20' }
     },
     {
       docId: 'wo-6', docType: 'workOrder',
-      data: { name: 'Spartan Run A', workCenterId: 'wc-5', status: 'open', startDate: '2025-09-01', endDate: '2025-11-30' }
+      data: { name: 'Shaft Turning – Run A', workCenterId: 'wc-5', status: 'open', startDate: '2025-09-01', endDate: '2025-11-30' }
     },
     {
       docId: 'wo-7', docType: 'workOrder',
-      data: { name: 'Spartan Run B', workCenterId: 'wc-5', status: 'open', startDate: '2026-01-01', endDate: '2026-03-15' }
+      data: { name: 'Shaft Turning – Run B', workCenterId: 'wc-5', status: 'open', startDate: '2026-01-01', endDate: '2026-03-15' }
     },
     {
       docId: 'wo-8', docType: 'workOrder',
-      data: { name: 'Hardware Refresh', workCenterId: 'wc-1', status: 'open', startDate: '2026-01-15', endDate: '2026-04-01' }
+      data: { name: 'Fastener Restock Run', workCenterId: 'wc-1', status: 'open', startDate: '2026-04-01', endDate: '2026-06-15' }
     },
   ]);
 
