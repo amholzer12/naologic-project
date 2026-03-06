@@ -139,11 +139,11 @@ src/
 
 | Work Center | Orders |
 |---|---|
-| Genesis Hardware | Centrix Ltd (Complete), Hardware Refresh (Open) |
-| Rodriques Electrics | Rodriques Electrics (In Progress) |
-| Konsulting Inc | Konsulting Inc (In Progress), Compleks Systems (In Progress) |
-| McMorrow Distribution | McMorrow Distribution (Blocked) |
-| Spartan Manufacturing | Spartan Run A (Open), Spartan Run B (Open) |
+| Apex Fabrication | Bracket Assembly – Lot 22 (Complete), Fastener Restock Run (Open) |
+| Volt Systems | PCB Rework – Batch 7 (In Progress) |
+| Meridian Assembly | Drive Housing – Q4 Run (In Progress), Gearbox Rebuild – Series B (In Progress) |
+| Harwick Logistics | Outbound Pallet Prep (Blocked) |
+| Blackstone Precision | Shaft Turning – Run A (Open), Shaft Turning – Run B (Open) |
 
 ---
 
@@ -158,6 +158,22 @@ UI is implemented pixel-perfect against the provided Sketch file. Key values ext
 - **Border color:** `rgba(200, 207, 233, 1)`
 - **Font:** Circular Std (Book 400, Medium 500)
 - **Status badges:** exact background/foreground values per status from Sketch
+
+---
+
+## Testing
+
+```bash
+ng test --watch=false
+```
+
+54 tests across 3 spec files, all passing:
+
+| File | Tests | What's covered |
+|---|---|---|
+| `work-order.spec.ts` | 15 | CRUD operations, overlap detection edge cases, ID generation |
+| `timeline.spec.ts` | 17 | Column generation per timescale, bar positioning math, panel state |
+| `work-order-panel.spec.ts` | 21 | Form validation, create vs edit mode, overlap error, output emissions |
 
 ---
 
