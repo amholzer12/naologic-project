@@ -158,8 +158,12 @@ export class Timeline {
   onPanelCancelled() { this.panelOpen.set(false); }
   onBackdropClick() { this.panelOpen.set(false); }
 
-  @HostListener('document:click')
-  closeBarMenu() { this.openMenuId.set(null); }
+  @HostListener('document:click', ['$event'])
+  closeBarMenu(event: MouseEvent) {
+    if (!(event.target as HTMLElement).closest('.bar-menu-wrapper')) {
+      this.openMenuId.set(null);
+    }
+  }
 
   protected getBarsForWorkCenter(workCenterId: string) {
     return this.svc.workOrders()

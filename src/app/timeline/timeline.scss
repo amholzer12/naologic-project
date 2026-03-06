@@ -207,7 +207,7 @@ $header-height: 40px;
 .grid-rows {
   position: relative;
   overflow: visible;
-  background: rgba(238, 240, 255, 1);
+  background: rgba(237, 238, 255, 0.5);
   flex: 1;
 }
 
@@ -270,7 +270,7 @@ $header-height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 32px 0 10px;
   gap: 8px;
   overflow: hidden;
   cursor: pointer;
@@ -336,7 +336,12 @@ $header-height: 40px;
 }
 
 .bar-menu-wrapper {
-  position: relative;
+  position: absolute;
+  right: 6px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
 }
 
 .bar-menu-btn {
