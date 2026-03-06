@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Timeline } from './timeline';
 
 describe('Timeline', () => {

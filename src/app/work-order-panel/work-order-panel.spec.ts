@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
-
 import { WorkOrderPanel } from './work-order-panel';
 import { WorkOrderService } from '../services/work-order';
 import { WorkOrderDocument } from '../models/work-order.models';
