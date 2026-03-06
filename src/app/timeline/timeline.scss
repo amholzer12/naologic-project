@@ -1,5 +1,5 @@
 $left-panel-width: 200px;
-$row-height: 48px;
+$row-height: 56px;
 $header-height: 40px;
 
 .page {
@@ -183,13 +183,7 @@ $header-height: 40px;
   font-size: 14px;
   font-weight: 400;
   color: rgba(104, 113, 150, 1);
-  border-right: 1px solid #e8e8f0;
   position: relative;
-
-  &:last-child {
-    border-right: none;
-  }
-
 }
 
 .current-col-badge {
@@ -239,7 +233,7 @@ $header-height: 40px;
 // Ghost bar (hover placeholder)
 .ghost-bar {
   position: absolute;
-  top: 5px;
+  top: 14px;
   width: 113px;
   height: 38px;
   border: 1px solid rgba(195, 199, 255, 1);
@@ -270,7 +264,7 @@ $header-height: 40px;
 // Work order bars
 .work-order-bar {
   position: absolute;
-  top: 5px;
+  top: 14px;
   height: 38px;
   border-radius: 8px;
   display: flex;
