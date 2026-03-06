@@ -1,59 +1,177 @@
-# NaologicChallenge
+# Naologic — Work Order Schedule Timeline
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+A pixel-perfect, interactive Gantt-style work order scheduling interface built as part of the Naologic frontend engineering take-home challenge.
 
-## Development server
+---
 
-To start a local development server, run:
+## Getting Started
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+**Prerequisites:** Node.js 20+ and npm 11+
 
 ```bash
-ng generate component component-name
+npm install
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Then open [http://localhost:4200](http://localhost:4200) in your browser.
 
-```bash
-ng generate --help
+---
+
+## What Was Built
+
+A fully interactive **Work Order Schedule Timeline** for a manufacturing ERP system. Users can visualize, create, edit, and delete work orders across multiple work centers on a horizontally-scrollable calendar grid.
+
+---
+
+## Features
+
+### Core
+
+| Feature | Details |
+|---|---|
+| **Timeline Grid** | Horizontally scrollable Gantt-style grid with fixed left panel |
+| **Timescale Zoom** | Switch between Hour / Day / Week / Month views — grid recenters on today |
+| **Work Order Bars** | Percentage-positioned bars with name, status badge, and three-dot context menu |
+| **Create Panel** | Click any empty grid area to open a slide-in form, pre-filled with the clicked date |
+| **Edit Panel** | Click ••• → Edit on any bar to open the same panel pre-populated with existing data |
+| **Delete** | Click ••• → Delete to remove a work order instantly |
+| **Overlap Detection** | Saving a work order that overlaps an existing one on the same work center shows an inline error banner |
+| **Today Indicator** | Subtle vertical line marking the current date on the grid |
+| **Date Validation** | End date must be after start date — enforced with a reactive form error |
+
+### Status System
+
+Four statuses with distinct color coding that runs consistently from the grid bars through to the panel dropdown:
+
+- **Open** — Teal
+- **In Progress** — Indigo
+- **Complete** — Green
+- **Blocked** — Amber
+
+---
+
+## Tech Stack
+
+| Layer | Choice | Reason |
+|---|---|---|
+| Framework | Angular 21 (standalone) | Required |
+| Language | TypeScript (strict mode) | Required |
+| Styles | SCSS | Required |
+| Forms | Reactive Forms (`FormGroup`, `FormControl`, `Validators`) | Required |
+| Dropdown | `@ng-select/ng-select` | Required |
+| Date Picker | `@ng-bootstrap/ng-bootstrap` (`ngbDatepicker`) | Required |
+| CSS Framework | Bootstrap 5 | Required |
+| State | Angular Signals (`signal`, `computed`) | Reactive, no external state library needed |
+| Testing | Vitest + jsdom | Lightweight, fast |
+
+---
+
+## Architecture
+
+### Signal-Based State
+
+All reactive state lives in `WorkOrderService` as an Angular `signal<WorkOrderDocument[]>`. Components read it directly — no `BehaviorSubject`, no `async` pipe, no `subscribe`. When data changes, the signal notifies every computed consumer automatically.
+
+```typescript
+// Service
+workOrders = signal<WorkOrderDocument[]>([...]);
+
+// Component — just reads the signal
+getBarsForWorkCenter(id: string) {
+  return this.svc.workOrders().filter(wo => wo.data.workCenterId === id);
+}
 ```
 
-## Building
+### Date-to-Pixel Math
 
-To build the project run:
+Bar positions are computed as percentages of the visible grid range, not fixed pixel values. This means bars stay correctly positioned at any screen width and across all timescales:
 
-```bash
-ng build
+```typescript
+const left  = ((clampedStart - gridStartMs) / totalMs) * 100;
+const width = ((clampedEnd   - clampedStart) / totalMs) * 100;
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The same math is used in reverse when translating a grid click back into a calendar date, enabling click-to-create with accurate date pre-fill.
 
-## Running unit tests
+### Single Panel Component
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+One `WorkOrderPanel` component handles both create and edit via a `mode: 'create' | 'edit'` input signal. `ngOnChanges` re-populates the form whenever inputs change, so there's no duplicated form logic.
 
-```bash
-ng test
+### Overlap Detection
+
+```typescript
+hasOverlap(order, excludeId?) {
+  return others.some(o => start < otherEnd && end > otherStart);
+}
 ```
 
-## Running end-to-end tests
+Standard interval overlap check: two ranges overlap when neither ends before the other starts. `excludeId` prevents a work order from flagging itself during an edit.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── models/
+│   │   └── work-order.models.ts       # WorkOrderDocument, WorkCenterDocument types
+│   ├── services/
+│   │   ├── work-order.ts              # Signal-based state + CRUD + overlap detection
+│   │   └── work-order.spec.ts
+│   ├── timeline/
+│   │   ├── timeline.ts                # Grid, bar positioning, panel/menu state
+│   │   ├── timeline.html
+│   │   └── timeline.scss
+│   ├── work-order-panel/
+│   │   ├── work-order-panel.ts        # Reactive form, create/edit logic, validation
+│   │   ├── work-order-panel.html
+│   │   └── work-order-panel.scss
+│   └── app.config.ts                  # MM.DD.YYYY date formatter, datepicker config
+├── styles.scss                        # Global styles, Bootstrap + ng-select imports
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## Sample Data
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+5 work centers and 8 seed work orders are pre-loaded, covering all four statuses and including multiple non-overlapping orders on the same work center.
+
+| Work Center | Orders |
+|---|---|
+| Genesis Hardware | Centrix Ltd (Complete), Hardware Refresh (Open) |
+| Rodriques Electrics | Rodriques Electrics (In Progress) |
+| Konsulting Inc | Konsulting Inc (In Progress), Compleks Systems (In Progress) |
+| McMorrow Distribution | McMorrow Distribution (Blocked) |
+| Spartan Manufacturing | Spartan Run A (Open), Spartan Run B (Open) |
+
+---
+
+## Design
+
+UI is implemented pixel-perfect against the provided Sketch file. Key values extracted directly from Sketch inspect:
+
+- **Panel width:** 591px with `border-radius: 12px 0 0 12px`
+- **Primary color:** `rgba(86, 89, 255, 1)`
+- **Text primary:** `rgba(3, 9, 41, 1)`
+- **Text secondary:** `rgba(104, 113, 150, 1)`
+- **Border color:** `rgba(200, 207, 233, 1)`
+- **Font:** Circular Std (Book 400, Medium 500)
+- **Status badges:** exact background/foreground values per status from Sketch
+
+---
+
+## If I Had More Time
+
+- **localStorage persistence** — work orders survive a page refresh
+- **Animations** — slide-in panel transition, bar appear/remove transitions
+- **Infinite scroll** — extend the grid as the user approaches either edge
+- **"Today" button** — scroll the grid back to center on the current date
+- **Tooltips** — hover a bar to see full dates and work center name
+- **Drag to resize** — extend or shrink a work order by dragging its edges
+
+### A Note on the NAOLOGIC Wordmark
+
+The Sketch file renders the NAOLOGIC logo as a vector **Shape** (SVG path), not as live text. Inspecting it via Sketch's CSS export only surfaces the bounding rectangle's dimensions and fill color (`rgba(62, 64, 219, 1)`) — the actual custom letterforms, including the stylized characters, are embedded as path data that isn't accessible through the inspector.
+
+To match it as closely as possible, the current implementation renders the wordmark as styled text using the correct brand color, with **NAO** at font-weight 700 and **LOGIC** at font-weight 400 to approximate the visual weight contrast visible in the design. A pixel-perfect match would require the original SVG asset from the Naologic team.
