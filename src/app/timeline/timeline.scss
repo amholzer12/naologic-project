@@ -109,9 +109,10 @@ $header-height: 40px;
 .timeline-container {
   display: flex;
   border: 1px solid #e8e8f0;
-  border-radius: 8px;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
   overflow: hidden;
-  margin: 0 36px 32px 100px;
+  margin: 0 36px 0 100px;
   flex: 1;
 }
 
@@ -209,6 +210,13 @@ $header-height: 40px;
   overflow: visible;
   background: rgba(237, 238, 255, 0.5);
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-rows-filler {
+  flex: 1;
+  display: flex;
 }
 
 .today-indicator {
@@ -223,11 +231,18 @@ $header-height: 40px;
 
 .grid-row {
   height: $row-height;
-  border-bottom: 1px solid #e8e8f0;
   position: relative;
+  display: flex;
   &:hover {
     background: rgba(237, 238, 255, 0.85);
   }
+}
+
+.grid-row-cell {
+  flex: 1;
+  min-width: 120px;
+  border-right: 1px solid #e8e8f0;
+  &:last-child { border-right: none; }
 }
 
 // Ghost bar (hover placeholder)

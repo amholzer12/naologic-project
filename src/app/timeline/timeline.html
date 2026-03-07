@@ -60,6 +60,9 @@
                (click)="onGridRowClick($event, wc.docId)"
                (mousemove)="onRowMouseMove($event, wc.docId)"
                (mouseleave)="onRowMouseLeave()">
+            @for (col of visibleColumns(); track col.label) {
+              <div class="grid-row-cell"></div>
+            }
             @if (hoverRowId() === wc.docId) {
               <div class="ghost-bar" [style.left.px]="hoverX() - 57">
                 <span class="ghost-tooltip">Click to add dates</span>
@@ -90,6 +93,11 @@
             }
           </div>
         }
+        <div class="grid-rows-filler">
+          @for (col of visibleColumns(); track col.label) {
+            <div class="grid-row-cell"></div>
+          }
+        </div>
       </div>
       </div><!-- /grid-canvas -->
     </div>
